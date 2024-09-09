@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: APIGATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: ANONYMOUS-SERVICE
+          uri: lb://ANONYMOUS-SERVICE
+          predicates:
+            - Path=/api/v1/**
+        - id: MONO-SERVICE
+          uri: lb://MONO-SERVICE/
+          predicates:
+            - Path=/api/v1/**
+      discovery:
+        locator:
+          enabled: true
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defauldZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+server:
+  port: 9091
